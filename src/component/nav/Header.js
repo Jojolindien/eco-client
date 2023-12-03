@@ -80,14 +80,18 @@ const Header = () => {
       className: "float-end",
     },
     user && {
-      label: user.email,
+      label: user.name,
       key: "SubMenu",
       icon: <SettingOutlined />,
       className: "float-end",
       children: [
         {
           key: "setting:1",
-          label: "Profil",
+          label: (
+            <Link to="/user/history" style={{ textDecoration: "none" }}>
+              Profil
+            </Link>
+          ),
         },
         {
           key: "setting:2",

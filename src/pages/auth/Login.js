@@ -11,10 +11,13 @@ import {
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { createOrUpdateUser } from "../../functions/auth";
+
+import "./login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("stephane.schwender@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
 
   let dispatch = useDispatch();
@@ -28,25 +31,43 @@ const Login = () => {
     }
   }, [user, navigate]);
 
+  const roleBasedRedirect = (res) => {
+    if (res.data.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/user/history");
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     // console.log(email, password);
     try {
+      // 1 avec les identifiant je recupere le user dans firebase
       const result = await signInWithEmailAndPassword(auth, email, password);
-      console.log(result);
       const { user } = result;
       const idTokenResult = await getIdTokenResult(user);
 
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
-      });
+      //2 avec l'idtoken du user je recupere le reste auprès du serveur api
+      createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id,
+            },
+          });
+          roleBasedRedirect(res);
+        })
+        .catch((e) => console.log("error", e));
+
       setLoading(false);
-      navigate("/");
+      navigate("/user/history");
     } catch (e) {
       console.log(e);
       toast.error(e.message);
@@ -62,15 +83,22 @@ const Login = () => {
       console.log(user);
       const idTokenResult = await user.getIdTokenResult();
       console.log(idTokenResult);
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
-      });
+      createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id,
+            },
+          });
+        })
+        .catch((e) => console.log("error", e));
 
-      navigate("/");
+      navigate("/user/history");
     });
   };
 
@@ -157,10 +185,10 @@ const Login = () => {
     </form>
   );
   return (
-    <div className="container p-5">
+    <div className={`container p-5 ${loading ? "fade-in" : ""}`}>
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          {!loading ? <h4>Login</h4> : <h4> Loading ...</h4>}
+          {!loading ? <h4>Login</h4> : <h4>Loading ...</h4>}
           <br />
           {loginForm()}
           <Link to="/forgot/password" className="float-end text-light">

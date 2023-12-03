@@ -1,0 +1,11 @@
+/* styles.css (ou le fichier CSS de votre choix) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(-20px); /* Translation vers le haut de 20px au départ */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

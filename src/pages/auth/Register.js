@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const [email, setEmail] = useState("");
 
+  //Verif si deja connecté
   const user = useSelector((state) => state.user);
   let navigate = useNavigate();
 
@@ -19,6 +20,7 @@ const Register = () => {
     }
   }, [user, navigate]);
 
+  //action du click
   const handleSubmit = async (event) => {
     event.preventDefault();
 
