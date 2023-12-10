@@ -89,14 +89,19 @@ const Header = () => {
           key: "setting:1",
           label: (
             <Link to="/user/history" style={{ textDecoration: "none" }}>
-              Profil
+              Mon profil utilisateur
             </Link>
           ),
         },
-        {
-          key: "setting:2",
-          label: "parameters",
-        },
+        user &&
+          user.role === "admin" && {
+            key: "setting:2",
+            label: (
+              <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
+                Mon profil administrateur
+              </Link>
+            ),
+          },
       ],
     },
   ];

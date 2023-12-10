@@ -16,6 +16,11 @@ import UserRoute from "./component/routes/UserRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminRoute from "./component/routes/AdminRoute";
 import Password from "./pages/user/Password";
+import CategoryCreate from "./pages/admin/category/CategoryCreate";
+import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
+import SubCreate from "./pages/admin/sub/SubCreate";
+import SubUpdate from "./pages/admin/sub/SubUpdate";
+import ProductCreate from "./pages/admin/product/ProductCreate";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -66,7 +71,12 @@ const App = () => {
           <Route path="/user/password" element={<Password />} />
         </Route>
         <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/category" element={<CategoryCreate />} />
+          <Route path="/admin/category/:slug" element={<CategoryUpdate />} />
+          <Route path="/admin/sub" element={<SubCreate />} />
+          <Route path="/admin/sub/:slug" element={<SubUpdate />} />
+          <Route path="/admin/product" element={<ProductCreate />} />
         </Route>
       </Routes>
     </div>

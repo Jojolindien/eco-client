@@ -33,7 +33,7 @@ const Login = () => {
 
   const roleBasedRedirect = (res) => {
     if (res.data.role === "admin") {
-      navigate("/admin");
+      navigate("/admin/dashboard");
     } else {
       navigate("/user/history");
     }
