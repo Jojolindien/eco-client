@@ -4,11 +4,12 @@ import { createProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import ProductCreateForm from "../../../component/form/ProductCreateForm";
 import {
   getAllSubCategoriesFromCategory,
   getCategories,
 } from "../../../functions/category";
+import FileUpload from "../../../component/form/FileUpload";
+import ProductCreateForm from "../../../component/form/ProductCreateForm copy";
 
 const initialState = {
   title: "",
@@ -74,6 +75,7 @@ const ProductCreate = () => {
         toast.success(`"${res.data.title}" has been created with succes`);
         setValues(initialState);
         loadCategories();
+        // window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +90,7 @@ const ProductCreate = () => {
   };
 
   //=>fonction différentes des autres form, car ici on fait 2 choses :
-  // 1 on set les states comme les autres form
+  // 1 on set les states comme les autres form : sub vidé + category: e.target
   // 2 par contre ici seulement on doit faire une requete
   // la value qu'on choisi de prendre est : value={c._id}, car niveau back on fait : Sub.find({ parent: req.params._id }).exec()
   const handleCategoryChange = async (e) => {
@@ -115,27 +117,25 @@ const ProductCreate = () => {
         <div className="col-md-10">
           {loading ? (
             <h4>
-              <LoadingOutlined /> Product create form
+              <LoadingOutlined /> Uploading
             </h4>
           ) : (
             <h4>Product create form</h4>
           )}
           <hr />
-          <div className="p3">
-            {/* <FileUpload
-              values={values}
-              setValues={setValues}
-              setLoading={setLoading}
-            /> */}
-          </div>
+          <FileUpload
+            values={values}
+            setValues={setValues}
+            setLoading={setLoading}
+          />
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            setValues={setValues}
             values={values}
             handleCategoryChange={handleCategoryChange}
             subOptions={subOptions}
             showSub={showSub}
-            setValues={setValues}
           />
         </div>
         {/* personnal component in component */}
