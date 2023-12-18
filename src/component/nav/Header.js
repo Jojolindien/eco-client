@@ -107,7 +107,7 @@ const Header = () => {
   ];
   return (
     <Menu
-      className="bg-dark text-white"
+      className="bg-black text-white"
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"

@@ -1,0 +1,10 @@
+body {
+  min-height: 100vh;
+}
+
+.slider img,
+.card-image {
+  height: 550px;
+  max-height: 750px;
+  object-fit: cover;
+}

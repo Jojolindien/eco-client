@@ -86,3 +86,37 @@ export const updateProduct = async (slug, product, authtoken) => {
     throw error;
   }
 };
+
+export const getProducts = async (sort, order, page) => {
+  try {
+    // Envoi d'une requête GET à l'API pour obtenir un produit par son slug
+    const response = await axios.post(process.env.REACT_APP_API + `/products`, {
+      sort,
+      order,
+      page,
+    });
+
+    // Retourne les données de réponse
+    return response;
+  } catch (error) {
+    // Gestion des erreurs en cas d'échec de la requête
+    console.error("Error removing category:", error);
+    throw error;
+  }
+};
+
+export const getProductsCount = async (slug) => {
+  try {
+    // Envoi d'une requête GET à l'API pour obtenir un produit par son slug
+    const response = await axios.get(
+      process.env.REACT_APP_API + `/products/total`
+    );
+
+    // Retourne les données de réponse
+    return response;
+  } catch (error) {
+    // Gestion des erreurs en cas d'échec de la requête
+    console.error("Error count category:", error);
+    throw error;
+  }
+};

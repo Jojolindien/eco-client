@@ -23,6 +23,7 @@ import SubUpdate from "./pages/admin/sub/SubUpdate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductUpdate from "./pages/admin/product/ProductUpdate";
+import Product from "./pages/Product";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const App = () => {
         <Route element={<UserRoute />}>
           <Route path="/user/history" element={<History />} />
           <Route path="/user/password" element={<Password />} />
+          <Route path="/product/:slug" element={<Product />} />
         </Route>
         <Route element={<AdminRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
