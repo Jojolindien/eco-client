@@ -69,10 +69,11 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/register/complete" element={<RegisterComplete />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
+        <Route path="/product/:slug" element={<Product />} />
+
         <Route element={<UserRoute />}>
           <Route path="/user/history" element={<History />} />
           <Route path="/user/password" element={<Password />} />
-          <Route path="/product/:slug" element={<Product />} />
         </Route>
         <Route element={<AdminRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />

@@ -120,3 +120,34 @@ export const getProductsCount = async (slug) => {
     throw error;
   }
 };
+
+export const productStar = async (productId, star, authtoken) => {
+  try {
+    return await axios.put(
+      process.env.REACT_APP_API + `/product/star/${productId}`,
+      { star },
+      {
+        headers: {
+          authtoken,
+        },
+      }
+    );
+  } catch (error) {
+    console.error("rating error :", error);
+    throw error;
+  }
+};
+
+export const getRelated = async (productId) => {
+  try {
+    const response = await axios.get(
+      process.env.REACT_APP_API + `/product/related/${productId}`
+    );
+
+    // Retourne les données de réponse
+    return response.data;
+  } catch (error) {
+    console.error("Error removing category:", error);
+    throw error;
+  }
+};

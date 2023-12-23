@@ -26,7 +26,7 @@ const Header = () => {
           type: "LOGOUT",
           payload: null,
         });
-        navigate("/login");
+        // navigate("/login");
         toast.success("logout successfully");
       })
       .catch((error) => {

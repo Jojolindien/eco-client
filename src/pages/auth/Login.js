@@ -10,7 +10,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createOrUpdateUser } from "../../functions/auth";
 
 import "./login.css";
@@ -22,20 +22,34 @@ const Login = () => {
 
   let dispatch = useDispatch();
   let navigate = useNavigate();
+  let location = useLocation();
   const provider = new GoogleAuthProvider();
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (user && user.token) {
-      navigate("/");
+    let intended = location.state;
+
+    if (intended) {
+      return;
+    } else {
+      if (user && user.token) {
+        navigate("/");
+      }
     }
   }, [user, navigate]);
 
   const roleBasedRedirect = (res) => {
-    if (res.data.role === "admin") {
-      navigate("/admin/dashboard");
+    //check if intended
+    let intended = location.state;
+    if (intended) {
+      navigate(intended.from);
     } else {
-      navigate("/user/history");
+      //check if admin
+      if (res.data.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/user/history");
+      }
     }
   };
 
@@ -186,7 +200,7 @@ const Login = () => {
   );
   return (
     <div className={`container p-5 ${loading ? "fade-in" : ""}`}>
-      <div className="row">
+      <div className="row" style={{ height: "100vh" }}>
         <div className="col-md-6 offset-md-3">
           {!loading ? <h4>Login</h4> : <h4>Loading ...</h4>}
           <br />

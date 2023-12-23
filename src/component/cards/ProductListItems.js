@@ -6,7 +6,6 @@ const ProductListItems = ({ product }) => {
 
   return (
     <ul className="list-group list-group-flush">
-      {JSON.stringify(product.quantity)}
       <li className="list-group-item">
         Price
         <span className="float-end">$ {price}</span>
