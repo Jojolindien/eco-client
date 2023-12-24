@@ -9,6 +9,18 @@ const headersWithAuthToken = (authtoken) => ({
 export const getCategories = async () =>
   await axios.get(`${process.env.REACT_APP_API}/categories`);
 
+export const getRelatedProductsFromCategory = async (slug) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API}/category/products/${slug}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    throw error;
+  }
+};
+
 export const getCategory = async (slug) => {
   try {
     const response = await axios.get(

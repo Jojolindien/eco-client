@@ -10,7 +10,7 @@ const Product = () => {
   const [star, setStar] = useState(0);
   const [related, setRelated] = useState({});
 
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector((state) => state.user);
   const { slug } = useParams();
 
   //this useEffect run first
@@ -23,13 +23,13 @@ const Product = () => {
   //postedBy est un indexe dans le tableau ratings
   useEffect(() => {
     if (product.ratings && user) {
-      console.log(product.ratings);
+      // console.log(product.ratings);
       let existingRatingObject = product.ratings.find(
         (ele) => ele.postedBy.toString() === user._id.toString()
       );
 
       if (existingRatingObject) {
-        console.log(existingRatingObject);
+        // console.log(existingRatingObject);
         setStar(existingRatingObject.star); // current user star
       } else {
         // Si l'utilisateur n'a pas encore évalué le produit, réinitialisez l'étoile à 0.
@@ -41,7 +41,7 @@ const Product = () => {
   //charge le produit sur lequel on a cliqué, lors du 1er useEffect
   //puis charge les produits ayant la meme categorie que le notre
   const loadSingleProduct = () => {
-    console.log("loadproduct");
+    // console.log("loadproduct");
     getProduct(slug).then((res) => {
       setProduct(res.data);
       // console.log(res.data);
@@ -89,19 +89,6 @@ const Product = () => {
           ) : (
             <div className="text-center">NO RELATED</div>
           )}
-
-          {/* <div className="row pb-5">
-            {related.length ? (
-              related.map((r) => (
-                <div key={r.id} className="col-md-2">
-                  <ProductCard product={r} />
-                </div>
-              ))
-            ) : (
-              <div className="text-center col">"No product found"</div>
-            )}
-          </div>
-          {JSON.stringify(related.length)} */}
         </div>
       </div>
     </div>

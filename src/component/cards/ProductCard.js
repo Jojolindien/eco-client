@@ -22,7 +22,7 @@ const ProductCard = ({ product, loading }) => {
           )}
           <Card
             hoverable
-            className="m-2"
+            className="mx-auto"
             style={{
               width: 280,
             }}

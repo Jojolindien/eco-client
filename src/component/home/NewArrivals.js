@@ -48,6 +48,7 @@ const NewArrivals = () => {
             defaultCurrent={page}
             total={Math.ceil(productsCount / 3) * 10}
             onChange={(value) => setPage(value)}
+            className="text-white"
           />
         </nav>
       </div>

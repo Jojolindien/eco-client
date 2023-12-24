@@ -4,6 +4,8 @@ import { getProducts } from "../functions/product";
 import Jumbotron from "../component/cards/Jumbotron";
 import NewArrivals from "../component/home/NewArrivals";
 import BestSellers from "../component/home/BestSellers";
+import CategoryList from "../component/category/CategoryList";
+import SubCategoryList from "../component/sub/subCategoryList";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -52,6 +54,10 @@ const Home = () => {
       <NewArrivals />
       <br />
       <BestSellers />
+      <br />
+      <CategoryList />
+      <br />
+      <SubCategoryList />
     </div>
   );
 };

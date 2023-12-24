@@ -18,6 +18,31 @@ export const getSub = async (slug) => {
   }
 };
 
+export const getRelatedProductsFromSub = async (slug) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API}/sub/products/${slug}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    throw error;
+  }
+};
+
+export const getSubcategories = async (slug) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API}/sub/products/${slug}`
+    );
+    console.error(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching sub:", error);
+    throw error; // Réexécutez l'erreur pour que le gestionnaire d'erreurs puisse la traiter
+  }
+};
+
 //slug est ce que je veux modifier, category les nouvelles info, et enfin le token d'admin
 export const removeSub = async (slug, authtoken) => {
   try {
