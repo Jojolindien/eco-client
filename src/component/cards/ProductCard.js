@@ -38,9 +38,9 @@ const ProductCard = ({ product, loading }) => {
               />
             }
             actions={[
-              <Link to={`/product/${slug}`}>
+              <div>
                 <EyeOutlined key="view" />
-              </Link>,
+              </div>,
               <ShoppingCartOutlined
                 key="add"
                 onClick={() => console.log(slug)}

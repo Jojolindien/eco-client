@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { StarOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useHistory, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RatingModal = ({ children, newStar, onStarClick, loadSingleProduct }) => {
   const [modalVisible, setModalVisible] = useState(false);

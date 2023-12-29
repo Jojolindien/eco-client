@@ -26,6 +26,8 @@ const Login = () => {
   const provider = new GoogleAuthProvider();
   const user = useSelector((state) => state.user);
 
+  //Verifie si on a eu l'intention de diriger l'utilisateur vers une page en particulier
+  // On a préalablement crée un lodation.state dans le module originaire du login
   useEffect(() => {
     let intended = location.state;
 

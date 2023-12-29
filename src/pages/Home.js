@@ -9,7 +9,7 @@ import SubCategoryList from "../component/sub/subCategoryList";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadAllProducts();

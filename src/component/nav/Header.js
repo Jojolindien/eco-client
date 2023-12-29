@@ -5,6 +5,7 @@ import {
   MailOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { NavLink, Link, useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import Search from "../form/Search";
 
 const Header = () => {
   const [current, setCurrent] = useState("mail");
@@ -51,6 +53,16 @@ const Header = () => {
       icon: <HomeOutlined />,
       // className: "bg-dark text-white",
     },
+    {
+      label: (
+        <NavLink to="/shop" style={{ textDecoration: "none" }}>
+          Shop
+        </NavLink>
+      ),
+      key: "shop",
+      icon: <ShoppingOutlined />,
+      // className: "bg-dark text-white",
+    },
     user && {
       label: "Logout",
       className: "float-end",
@@ -79,6 +91,7 @@ const Header = () => {
       icon: <LoginOutlined />,
       className: "float-end",
     },
+
     user && {
       label: user.name,
       key: "SubMenu",
@@ -104,10 +117,15 @@ const Header = () => {
           },
       ],
     },
+    {
+      label: <Search />,
+      key: "search",
+      className: "float-end",
+    },
   ];
   return (
     <Menu
-      className="bg-black text-white"
+      className="bg-black text-white outline-light"
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"

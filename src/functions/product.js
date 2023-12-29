@@ -151,3 +151,22 @@ export const getRelated = async (productId) => {
     throw error;
   }
 };
+
+export const fetchProductByFilter = async (arg) => {
+  console.log("ARGUMENT DANS LA FONCTION", arg);
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_API + `/search/filters`,
+      arg
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Request failed with status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error fetching product by filter:", error.message);
+    throw error; // Réémettre l'erreur pour permettre à l'appelant de la gérer
+  }
+};
