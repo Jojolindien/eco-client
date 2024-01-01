@@ -68,19 +68,19 @@ const ProductCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    createProduct(values, user.token)
-      .then((res) => {
-        console.log(res);
-        // window.alert(`"${res.data.title}" has been created with succes`);
-        toast.success(`"${res.data.title}" has been created with succes`);
-        setValues(initialState);
-        loadCategories();
-        // window.location.reload(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.message);
-      });
+    // createProduct(values, user.token)
+    //   .then((res) => {
+    //     console.log(res);
+    //     // window.alert(`"${res.data.title}" has been created with succes`);
+    //     toast.success(`"${res.data.title}" has been created with succes`);
+    //     setValues(initialState);
+    //     loadCategories();
+    //     // window.location.reload(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     toast.error(err.message);
+    //   });
   };
 
   //=> function unique pour tous les champs : change the state : value [title, category ...]

@@ -18,7 +18,7 @@ const { SubMenu, ItemGroup } = Menu;
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [price, setPrice] = useState([0, 0]);
+  const [price, setPrice] = useState([0, 5000]);
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [checkedCategoriesIds, setCheckedCategoriesIds] = useState([]);
@@ -332,13 +332,14 @@ const Shop = () => {
   );
 
   return (
-    <div className="container-fluid vh-100">
+    <div className="container-fluid" style={{ minHeight: "100vh" }}>
       <div className="row">
         <div className="col-md-3 pt-2">
           <Menu
             mode="inline"
             defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
-            className="ps-4 pe-4 vh-100"
+            className="ps-4 pe-4"
+            style={{ minHeight: "100vh" }}
           >
             {/* ________________________________________PRICE */}
             <SubMenu
@@ -359,7 +360,7 @@ const Shop = () => {
                   }}
                   value={price}
                   onChange={handleSlider}
-                  max="4999"
+                  max="5000"
                 />
               </div>
             </SubMenu>

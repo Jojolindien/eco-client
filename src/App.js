@@ -27,6 +27,8 @@ import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
 import SubHome from "./pages/sub/SubHome";
 import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
+import SideDrawer from "./component/drawer/SideDrawer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -65,6 +67,7 @@ const App = () => {
   return (
     <div className="bg-dark text-white">
       <Header />
+      <SideDrawer />
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -76,6 +79,7 @@ const App = () => {
         <Route path="/category/:slug" element={<CategoryHome />} />
         <Route path="/sub/:slug" element={<SubHome />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/cart" element={<Cart />} />
         <Route element={<UserRoute />}>
           <Route path="/user/history" element={<History />} />
           <Route path="/user/password" element={<Password />} />

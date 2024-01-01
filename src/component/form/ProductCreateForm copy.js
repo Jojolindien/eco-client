@@ -68,11 +68,15 @@ const ProductCreateForm = ({
 
       <div className="form-group">
         <label htmlFor="shipping">Shipping</label>
-        <select className="form-control" id="shipping" onChange={handleChange}>
+        <select
+          className="form-control"
+          id="shipping"
+          onChange={handleChange}
+          value={shipping}
+        >
+          Select
           <option value="No">No</option>
-          <option defaultValue value="Yes">
-            Yes
-          </option>
+          <option value="Yes">Yes</option>
         </select>
       </div>
 

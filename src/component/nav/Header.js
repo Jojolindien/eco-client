@@ -6,8 +6,9 @@ import {
   SettingOutlined,
   LogoutOutlined,
   ShoppingOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Badge, Menu } from "antd";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
@@ -19,7 +20,7 @@ const Header = () => {
   const [current, setCurrent] = useState("mail");
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const { user, cart } = useSelector((state) => ({ ...state }));
 
   const logout = () => {
     signOut(auth)
@@ -62,6 +63,19 @@ const Header = () => {
       key: "shop",
       icon: <ShoppingOutlined />,
       // className: "bg-dark text-white",
+    },
+    {
+      label: (
+        <Link to="/cart" style={{ textDecoration: "none" }}>
+          <Badge className="text-white" count={cart.length} offset={[15, 0]}>
+            Cart
+          </Badge>
+        </Link>
+      ),
+      // onClick: logout,
+      key: "cart",
+      icon: <ShoppingCartOutlined />,
+      style: { marginLeft: "auto" },
     },
     user && {
       label: "Logout",
