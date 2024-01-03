@@ -30,6 +30,7 @@ import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import SideDrawer from "./component/drawer/SideDrawer";
 import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -85,6 +86,7 @@ const App = () => {
           <Route path="/user/history" element={<History />} />
           <Route path="/user/password" element={<Password />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/user/payment" element={<Payment />} />
         </Route>
         <Route element={<AdminRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />

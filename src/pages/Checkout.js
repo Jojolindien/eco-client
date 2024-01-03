@@ -6,6 +6,8 @@ import { emptyUserCart, getUserCart, saveUserAddress } from "../functions/user";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { currentUser } from "../functions/auth";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -15,12 +17,18 @@ const Checkout = () => {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
       console.log("user cart res", JSON.stringify(res, null, 4));
       setProducts(res.products);
       setTotal(res.cartTotal);
+    });
+    currentUser(user.token).then((res) => {
+      if (res.data.address) {
+        setAddress(res.data.address);
+      }
     });
   }, [user.token]);
 
@@ -91,8 +99,9 @@ const Checkout = () => {
               <button
                 className="btn btn-primary"
                 disabled={!addressSaved || !products.length}
+                onClick={() => navigate("/user/payment")}
               >
-                Place order
+                {!addressSaved ? "Confirm address to order" : "order"}
               </button>
             </div>
             <div className="col-md-6">
