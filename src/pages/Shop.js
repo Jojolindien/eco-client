@@ -74,11 +74,6 @@ const Shop = () => {
   //________________2e load on user Search input
   //   search input géré par le redux store
   const fetchProducts = async (arg) => {
-    // //if no text => reload all product****
-    // if (text === "" && checkedCategoriesIds === null && price.length === 0) {
-    //   loadAllProducts();
-    //   return;
-    // }
     fetchProductByFilter(arg).then((res) => {
       setProducts(res);
       console.log(res);

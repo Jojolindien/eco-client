@@ -68,7 +68,14 @@ const SingleProduct = ({ product, onStarClick, star, loadSingleProduct }) => {
       <div className="col-md-7 mt-5">
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
-            {images && images.map((i) => <img src={i.url} key={i.public_id} />)}
+            {images &&
+              images.map((i) => (
+                <img
+                  src={i.url}
+                  key={i.public_id}
+                  style={{ objectFit: "contain" }}
+                />
+              ))}
           </Carousel>
         ) : (
           <Carousel>
