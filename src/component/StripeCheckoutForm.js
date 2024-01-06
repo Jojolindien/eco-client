@@ -9,51 +9,59 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-const StripeCheckoutForm = () => {
+const StripeCheckoutForm = ({ cartTotal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState("");
+  const [message, setMessage] = useState(null);
+
+  const [loading, setLoading] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
-  const [cartTotal, setCartTotal] = useState(0);
-
   const stripe = useStripe();
   const elements = useElements();
 
-  //
   useEffect(() => {
-    createPaymentIntent(user.token).then((res) => {
-      console.log("create payment intent", JSON.stringify(res.data));
-      setClientSecret(res.data.clientSecret);
-      setCartTotal(res.data.cartTotal);
+    if (!stripe) {
+      return;
+    }
+
+    if (!clientSecret) {
+      return;
+    }
+
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      switch (paymentIntent.status) {
+        case "succeeded":
+          setMessage("Payment succeeded!");
+          break;
+        case "processing":
+          setMessage("Your payment is processing.");
+          break;
+        case "requires_payment_method":
+          setMessage("Your payment was not successful, please try again.");
+          break;
+        default:
+          setMessage("Something went wrong.");
+          break;
+      }
     });
-  }, []);
+  }, [stripe]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.error("PAYEMENT SUBMIT");
     try {
-      // Vérifiez si elements.getElement(CardElement) renvoie un élément valide
-      const cardElement = elements.getElement(CardElement);
+      setLoading(true);
 
-      if (!cardElement) {
-        // Gérez le cas où l'élément de carte n'est pas disponible
-        console.error("Card element not found");
-        return;
-      }
-
-      setProcessing(true);
-
-      const payload = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: e.target.name.value,
-          },
+      const payload = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: "http://localhost:3000",
         },
       });
 
@@ -71,7 +79,7 @@ const StripeCheckoutForm = () => {
       console.error("Error during payment confirmation:", error);
       setError("An error occurred during payment confirmation.");
     } finally {
-      setProcessing(false);
+      setLoading(false);
     }
   };
 
@@ -89,24 +97,6 @@ const StripeCheckoutForm = () => {
     width: "auto",
   };
 
-  // const cartStyle = {
-  //   style: {
-  //     base: {
-  //       color: "#32325d",
-  //       fontFamily: "Arial, sans-serif",
-  //       fontSmoothing: "antialiased",
-  //       fontSize: "16px",
-  //       "::placeholder": {
-  //         color: "#32325d",
-  //       },
-  //     },
-  //     invalid: {
-  //       color: "#fa755a",
-  //       iconColor: "#fa755a",
-  //     },
-  //   },
-  // };
-
   return (
     <>
       <div className="card" style={cardStyle}>
@@ -121,39 +111,25 @@ const StripeCheckoutForm = () => {
               className="stripe-form bg-white "
               onSubmit={handleSubmit}
             >
-              <CardElement
-                id="card-element"
+              <PaymentElement
+                id="payment-element"
                 options={paymentElementOptions}
-                // options={cartStyle}
-                className="mb-3"
-                onChange={handleChange}
-              ></CardElement>
+              />
               <button
-                disabled={processing || disabled || succeeded}
+                disabled={loading || !stripe || !elements}
                 id="submit"
                 className="stripe-button"
               >
                 <span id="button-text">
-                  {processing ? (
+                  {loading ? (
                     <div className="spinner" id="spinner"></div>
                   ) : (
                     "Pay now"
                   )}
                 </span>
               </button>
-              <br />
-              {error && (
-                <div className="card-error text-danger" role="alert">
-                  {error}
-                </div>
-              )}
-              {succeeded && (
-                <div className="alert alert-success" role="alert">
-                  "Paiement réalisé avec succès"
-                  <br />
-                  <Link to="/user/history">See your purchase history</Link>
-                </div>
-              )}
+              {/* Show any error or success messages */}
+              {message && <div id="payment-message">{message}</div>}
             </form>
           </p>
           <a href="/cart" className="card-link">
