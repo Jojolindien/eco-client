@@ -127,7 +127,7 @@ const StripeCheckoutForm = () => {
                 // options={cartStyle}
                 className="mb-3"
                 onChange={handleChange}
-              ></CardElement>
+              />
               <button
                 disabled={processing || disabled || succeeded}
                 id="submit"
