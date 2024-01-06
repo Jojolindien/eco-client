@@ -33,6 +33,17 @@ const Checkout = () => {
   }, [user.token]);
 
   const saveAdressToDb = () => {
+    if (
+      !address ||
+      address.trim() === "" ||
+      address === "<p><br></p>" ||
+      address === "<p> </p>"
+    ) {
+      console.log("PAS DADDRESS");
+      toast.error("Check your address");
+
+      return;
+    }
     saveUserAddress(user.token, address).then((res) => {
       if (res.ok) {
         setAddressSaved(true);
@@ -59,9 +70,9 @@ const Checkout = () => {
 
   return (
     <div className=" vh-100">
-      <div className="row mt-5 px-5">
+      <div className="row mt-5 px-5 text-center">
         <div className="col-md-6">
-          <h4>Delevery adress</h4>
+          <h4>Delivery address</h4>
           <br />
           <br />
           <ReactQuill
@@ -70,13 +81,14 @@ const Checkout = () => {
             onChange={setAddress}
             className="bg-white text-black"
           />
-          <button className="btn btn-primary mt-4" onClick={saveAdressToDb}>
-            Save
+          {address}
+          <button
+            className="btn btn-primary mt-4 btn-lg w-100"
+            onClick={saveAdressToDb}
+          >
+            {address ? "I confirm my delivery address" : "Save my address"}
           </button>
           <hr />
-          <h4>Got Coupon ?</h4>
-          <br />
-          coupon input and applu button
         </div>
 
         <div className="col-md-6">
@@ -97,7 +109,7 @@ const Checkout = () => {
           <div className="row">
             <div className="col-md-6">
               <button
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg w-100"
                 disabled={!addressSaved || !products.length}
                 onClick={() => navigate("/user/payment")}
               >
@@ -106,7 +118,7 @@ const Checkout = () => {
             </div>
             <div className="col-md-6">
               <button
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg w-100"
                 onClick={emptycart}
                 disabled={!products.length}
               >
@@ -115,6 +127,11 @@ const Checkout = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="row mt-5 px-5 text-center">
+        <h4>Got Coupon ?</h4>
+        <br />
+        <p>coupon input and apply button</p>
       </div>
     </div>
   );

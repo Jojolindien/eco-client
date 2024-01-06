@@ -1,25 +1,15 @@
 import {
   PaymentElement,
-  CardElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { createPaymentIntent } from "../functions/stripe";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+
 import { useEffect, useState } from "react";
 
 const StripeCheckoutForm = ({ cartTotal }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
-
-  const [succeeded, setSucceeded] = useState(false);
-  const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
-  const [loading, setLoading] = useState("");
-  const [disabled, setDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
@@ -53,9 +43,8 @@ const StripeCheckoutForm = ({ cartTotal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.error("PAYEMENT SUBMIT");
     try {
-      setLoading(true);
+      setIsLoading(true);
 
       const payload = await stripe.confirmPayment({
         elements,
@@ -63,6 +52,7 @@ const StripeCheckoutForm = ({ cartTotal }) => {
           // Make sure to change this to your payment completion page
           return_url: "http://localhost:3000",
         },
+        redirect: "if_required",
       });
 
       if (payload.error) {
@@ -79,14 +69,8 @@ const StripeCheckoutForm = ({ cartTotal }) => {
       console.error("Error during payment confirmation:", error);
       setError("An error occurred during payment confirmation.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
-  };
-
-  const handleChange = async (e) => {
-    // Listen for changes in the card element
-    setDisabled(e.empty); //disable pay button if error
-    setError(e.error ? e.error.message : ""); // show error message
   };
 
   const paymentElementOptions = {
@@ -116,12 +100,12 @@ const StripeCheckoutForm = ({ cartTotal }) => {
                 options={paymentElementOptions}
               />
               <button
-                disabled={loading || !stripe || !elements}
+                disabled={isLoading || !stripe || !elements}
                 id="submit"
                 className="stripe-button"
               >
                 <span id="button-text">
-                  {loading ? (
+                  {isLoading ? (
                     <div className="spinner" id="spinner"></div>
                   ) : (
                     "Pay now"

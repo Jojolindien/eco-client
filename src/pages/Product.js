@@ -78,7 +78,7 @@ const Product = () => {
           <h5>Related products</h5>
           <hr />
           {related.length ? (
-            <div className="row text-center">
+            <div className="row text-center vh-100">
               {related.map((r) => (
                 <div key={r._id} className="col-md-2 mx-auto">
                   {/* Utilisez la classe "col-md-4" pour définir la largeur de chaque colonne */}
