@@ -83,3 +83,24 @@ export const saveUserAddress = async (authtoken, address) => {
     throw error; // Répète l'erreur pour qu'elle soit gérée par le code appelant
   }
 };
+
+export const createOrder = async (stripeResponse, authtoken) => {
+  console.log(stripeResponse);
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_API + "/user/order",
+      { stripeResponse },
+      {
+        headers: {
+          authtoken: authtoken,
+        },
+      }
+    );
+
+    return response.data; // Retourne les données de la réponse si la requête réussit
+  } catch (error) {
+    // Gère les erreurs ici
+    console.error("Error while creating order", error);
+    throw error; // Répète l'erreur pour qu'elle soit gérée par le code appelant
+  }
+};

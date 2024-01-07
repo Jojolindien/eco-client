@@ -45,9 +45,9 @@ const Cart = () => {
           <th scope="col">Remove</th>
         </tr>
       </thead>
-      {cart.map((p) => (
-        <ProductCardInCheckout key={p._id} p={p} />
-      ))}
+      {Array.isArray(cart) &&
+        cart &&
+        cart.map((p) => <ProductCardInCheckout key={p._id} p={p} />)}
     </table>
   );
 

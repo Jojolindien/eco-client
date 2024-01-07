@@ -3,16 +3,21 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-
+import { createOrder, emptyUserCart } from "../functions/user";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-const StripeCheckoutForm = ({ cartTotal }) => {
+const StripeCheckoutForm = ({ cartTotal, token }) => {
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState("");
+  const [succeeded, setSucceeded] = useState("");
 
   const [isLoading, setIsLoading] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!stripe) {
@@ -60,6 +65,25 @@ const StripeCheckoutForm = ({ cartTotal }) => {
       } else {
         // Traitement du paiement réussi ici
         // Créer une commande et enregistrez-la dans la base de données pour que l'administrateur la traite
+        createOrder(payload, token).then((res) => {
+          console.log(res);
+          if (res.ok) {
+            // first we empty local storage
+            if (typeof window !== "undefined") localStorage.removeItem("cart");
+            // second we empty redux
+            dispatch({
+              type: "ADD_TO_CART",
+              payload: [],
+            });
+            // if coupon reset coupon to false
+            // dispatch({
+            //   type: "COUPON_APPLIED",
+            //   payload: false,
+            // });
+            //remove from database
+            emptyUserCart(token);
+          }
+        });
         // Vider le panier de l'utilisateur depuis le store Redux et le stockage Redux
         console.log(JSON.stringify(payload, null, 4));
         setSucceeded(true);
@@ -85,7 +109,7 @@ const StripeCheckoutForm = ({ cartTotal }) => {
     <>
       <div className="card" style={cardStyle}>
         <div className="card-body">
-          <h5 className="card-title">{`${cartTotal} euros`}</h5>
+          <h5 className="card-title">{`Total amount : ${cartTotal} euros`}</h5>
           <h6 className="card-subtitle mb-2 text-body-secondary">
             Paiement by Stripe
           </h6>

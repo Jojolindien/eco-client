@@ -12,10 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY_BANKCO);
 
 const Payment = () => {
-  const [succeeded, setSucceeded] = useState(false);
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState("");
-  const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
   const [cartTotal, setCartTotal] = useState(0);
 
@@ -27,6 +23,10 @@ const Payment = () => {
         "create payment intent",
         JSON.stringify(res.data.clientSecret)
       );
+      if (!res) {
+        console.log("no cart");
+        return;
+      }
       setClientSecret(res.data.clientSecret);
       setCartTotal(res.data.cartTotal);
     });
@@ -48,6 +48,7 @@ const Payment = () => {
           <StripeCheckoutForm
             cartTotal={cartTotal}
             clientSecret={clientSecret}
+            token={user.token}
           />
         </Elements>
       )}

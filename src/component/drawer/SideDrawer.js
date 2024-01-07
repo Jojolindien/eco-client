@@ -22,27 +22,28 @@ const SideDrawer = () => {
         dispatch({ type: "SET_VISIBLE", payload: false });
       }}
     >
-      {cart.map((p) => (
-        <div key={p._id} className="row">
-          <div className="col">
-            {p.images[0] ? (
-              <>
-                <img src={p.images[0].url} style={imageStyle} />
-                <p className="text-center bg-secondary text-light">
-                  {p.title} x {p.count}
-                </p>
-              </>
-            ) : (
-              <>
-                <p style={imageStyle}>No image</p>
-                <p className="text-center bg-secondary text-light">
-                  {p.title} x {p.count}
-                </p>
-              </>
-            )}
+      {cart &&
+        cart.map((p) => (
+          <div key={p._id} className="row">
+            <div className="col">
+              {p.images[0] ? (
+                <>
+                  <img src={p.images[0].url ?? "No image"} style={imageStyle} />
+                  <p className="text-center bg-secondary text-light">
+                    {p.title} x {p.count}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p style={imageStyle}>No image</p>
+                  <p className="text-center bg-secondary text-light">
+                    {p.title} x {p.count}
+                  </p>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
       <Link to="/cart">
         <button
           className="text-center btn btn-primary"

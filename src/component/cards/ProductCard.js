@@ -1,4 +1,10 @@
-import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  ShoppingCartOutlined,
+  StopOutlined,
+} from "@ant-design/icons";
+import { Icon } from "antd";
+
 import { Link } from "react-router-dom";
 import showAverage from "../../functions/rating";
 //lodash fournit des fonctions utiles pour la manipulation de tableaux, d'objets, de chaînes, etc.
@@ -7,7 +13,7 @@ import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Card, Skeleton, Tooltip } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const { Meta } = Card;
 
 const ProductCard = ({ product, loading }) => {
@@ -17,6 +23,12 @@ const ProductCard = ({ product, loading }) => {
 
   const dispatch = useDispatch();
   const { user, cart } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    if (product.quantity < 1) {
+      setTooltip("No stock");
+    }
+  }, []);
 
   const handleAddCard = () => {
     //create card array
@@ -90,9 +102,22 @@ const ProductCard = ({ product, loading }) => {
                 <EyeOutlined key="view" />
               </Link>,
               <Tooltip title={tooltip}>
-                <a onClick={() => handleAddCard()}>
-                  <ShoppingCartOutlined key="add" />
-                </a>
+                <button
+                  onClick={product.quantity >= 1 ? handleAddCard : undefined}
+                  disabled={product.quantity < 1}
+                  style={{
+                    border: "none",
+                    background: "none",
+                    padding: 0,
+                    cursor: "pointer",
+                  }}
+                >
+                  {product.quantity >= 1 ? (
+                    <ShoppingCartOutlined key="add" />
+                  ) : (
+                    <StopOutlined />
+                  )}
+                </button>
               </Tooltip>,
             ]}
           >
