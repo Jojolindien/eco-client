@@ -1,6 +1,6 @@
 import { Modal, Rate } from "antd";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { StarOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";

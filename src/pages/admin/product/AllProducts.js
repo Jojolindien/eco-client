@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react"; // Ajout de React
 import AdminProductCard from "../../../component/cards/AdminProductCard";
 import { RemoveProduct, getProductByCount } from "../../../functions/product";
 import AdminNav from "../../../component/nav/AdminNav";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
 
   //Obtention  des products [] au lancement
   useEffect(() => {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import LoadingToRedirect from "./LoadingToRedirect";
 import { currentAdmin } from "../../functions/auth";
 
 const AdminRoute = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const [ok, setOk] = useState(false);
 
   useEffect(() => {

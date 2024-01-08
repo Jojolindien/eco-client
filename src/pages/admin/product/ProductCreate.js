@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import AdminNav from "../../../component/nav/AdminNav";
 import { createProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
@@ -36,7 +36,7 @@ const ProductCreate = () => {
   const [subOptions, setSubOptions] = useState([]);
 
   //redux
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
 
   useEffect(() => {
     loadCategories();

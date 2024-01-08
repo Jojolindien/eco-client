@@ -4,14 +4,14 @@ import { toast } from "react-toastify";
 import { MailOutlined } from "@ant-design/icons";
 import { sendSignInLinkToEmail } from "firebase/auth";
 import { Button } from "antd";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
 
   //Verif si deja connecté
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   let navigate = useNavigate();
 
   useEffect(() => {

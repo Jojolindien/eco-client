@@ -10,7 +10,7 @@ import showAverage from "../../functions/rating";
 //lodash fournit des fonctions utiles pour la manipulation de tableaux, d'objets, de chaînes, etc.
 //_ est en alias lors de l'importation est une convention courante dans le monde JavaScript.
 import _ from "lodash";
-import { useSelector, useDispatch } from "react-redux";
+import { shallowEqual, useSelector, useDispatch } from "react-redux";
 
 import { Card, Skeleton, Tooltip } from "antd";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const ProductCard = ({ product, loading }) => {
   const [tooltip, setTooltip] = useState("Click to add");
 
   const dispatch = useDispatch();
-  const { user, cart } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => ({ ...state }), shallowEqual);
 
   useEffect(() => {
     if (product.quantity < 1) {

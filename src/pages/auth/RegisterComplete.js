@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
 
 const RegisterComplete = () => {
@@ -17,7 +17,7 @@ const RegisterComplete = () => {
   const [password, setPassword] = useState("");
 
   let navigate = useNavigate();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
 
   const dispatch = useDispatch();
 

@@ -1,10 +1,10 @@
 import { Drawer, Button } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const SideDrawer = () => {
   const dispatch = useDispatch();
-  const { drawer, cart } = useSelector((state) => ({ ...state }));
+  const { drawer, cart } = useSelector((state) => ({ ...state }), shallowEqual);
 
   const imageStyle = {
     width: "100%",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Button } from "antd";
 import AdminNav from "../../../component/nav/AdminNav";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import { getSub, getSubs, updateSub } from "../../../functions/sub";
 import { getCategories } from "../../../functions/category";
 
 const SubUpdate = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
   const [loading, setLoading] = useState(false);

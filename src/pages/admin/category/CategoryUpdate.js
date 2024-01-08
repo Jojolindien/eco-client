@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Button } from "antd";
 import { getCategory, updateCategory } from "../../../functions/category";
 import AdminNav from "../../../component/nav/AdminNav";
@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CategoryForm from "../../../component/form/CategoryForm";
 
 const CategoryUpdate = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 

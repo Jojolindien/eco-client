@@ -9,7 +9,7 @@ import {
   getCategories,
 } from "../../../functions/category";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -37,7 +37,7 @@ const ProductUpdate = (props) => {
   const [loading, setLoading] = useState(false);
 
   //redux
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user } = useSelector((state) => ({ ...state }), shallowEqual);
   const navigate = useNavigate();
   const { slug } = useParams();
 

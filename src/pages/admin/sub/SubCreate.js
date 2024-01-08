@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import AdminNav from "../../../component/nav/AdminNav";
 import { useEffect, useState } from "react";
 import { Button, Card, Input } from "antd";
@@ -15,7 +15,7 @@ import LocalSearch from "../../../component/form/LocalSearch";
 import { createSub, getSubs, removeSub } from "../../../functions/sub";
 
 const SubCreate = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
 
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);

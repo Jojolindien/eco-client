@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { SearchOutlined } from "@ant-design/icons";
 
 //ici le state est géré directement dans redux
@@ -7,7 +7,7 @@ const Search = () => {
   let dispatch = useDispatch();
 
   //on recupere seulement l'état de search
-  let { search } = useSelector((state) => ({ ...state }));
+  let { search } = useSelector((state) => ({ ...state }), shallowEqual);
   const { text } = search;
 
   const navigate = useNavigate();

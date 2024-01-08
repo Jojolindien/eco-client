@@ -1,7 +1,7 @@
 //
 
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { emptyUserCart, getUserCart, saveUserAddress } from "../functions/user";
 import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
@@ -16,7 +16,7 @@ const Checkout = () => {
   const [addressSaved, setAddressSaved] = useState(false);
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user } = useSelector((state) => ({ ...state }), shallowEqual);
   const navigate = useNavigate();
 
   useEffect(() => {

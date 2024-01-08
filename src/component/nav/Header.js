@@ -13,14 +13,14 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Search from "../form/Search";
 
 const Header = () => {
   const [current, setCurrent] = useState("mail");
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, cart } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => ({ ...state }), shallowEqual);
 
   const logout = () => {
     signOut(auth)

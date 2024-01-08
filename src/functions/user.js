@@ -104,3 +104,23 @@ export const createOrder = async (stripeResponse, authtoken) => {
     throw error; // Répète l'erreur pour qu'elle soit gérée par le code appelant
   }
 };
+
+export const getUserOrders = async (authtoken) => {
+  try {
+    const response = await axios.get(
+      process.env.REACT_APP_API + "/user/orders",
+
+      {
+        headers: {
+          authtoken: authtoken,
+        },
+      }
+    );
+
+    return response.data; // Retourne les données de la réponse si la requête réussit
+  } catch (error) {
+    // Gère les erreurs ici
+    console.error("Error while getting user cart:", error);
+    throw error; // Répète l'erreur pour qu'elle soit gérée par le code appelant
+  }
+};

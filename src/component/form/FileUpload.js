@@ -1,7 +1,7 @@
 import Resizer from "react-image-file-resizer";
 import { Avatar, Badge } from "antd";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const FileUpload = ({ values, setValues, setLoading }) => {

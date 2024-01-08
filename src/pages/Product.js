@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProduct, getRelated, productStar } from "../functions/product";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import SingleProduct from "../component/cards/SingleProduct";
 import ProductCard from "../component/cards/ProductCard";
@@ -10,7 +10,7 @@ const Product = () => {
   const [star, setStar] = useState(0);
   const [related, setRelated] = useState({});
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const { slug } = useParams();
 
   //this useEffect run first

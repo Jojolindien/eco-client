@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { fetchProductByFilter, getProductByCount } from "../functions/product";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { useEffect, useState } from "react";
 import ProductCard from "../component/cards/ProductCard";
 import { Menu, Slider, Checkbox, Radio } from "antd";
@@ -44,7 +44,7 @@ const Shop = () => {
   const [color, setColor] = useState("");
 
   let dispatch = useDispatch();
-  let { search } = useSelector((state) => ({ ...state }));
+  let { search } = useSelector((state) => ({ ...state }), shallowEqual);
   let { text } = search;
 
   const navigate = useNavigate();

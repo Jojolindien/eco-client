@@ -1,7 +1,7 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { auth } from "../../firebase";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user, shallowEqual);
   const navigate = useNavigate();
 
   useEffect(() => {

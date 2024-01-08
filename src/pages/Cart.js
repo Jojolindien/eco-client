@@ -1,11 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ProductCardInCheckout from "../component/cards/ProductCardInCheckout";
 import { userCart } from "../functions/user";
 import { toast } from "react-toastify";
 
 const Cart = () => {
-  const { cart, user } = useSelector((state) => state);
+  const { cart, user } = useSelector((state) => ({ ...state }), shallowEqual);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
